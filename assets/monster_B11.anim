@@ -1,0 +1,37 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "monster_B11",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.3,
+  "sample": 10,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "69a5e87b-3206-4107-9061-73eaa3f6c46c"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "0b16e16c-89a6-451e-8487-f2e0f885dd34"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "5d5a1a6d-e0c5-44be-a095-8419dce31b59"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

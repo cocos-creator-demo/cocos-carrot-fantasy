@@ -31,15 +31,21 @@ export default class NewClass extends cc.Component {
     initMap(currentLv: number) {
         const pointGroup = this.map.getObjectGroup("point")
         const objs = pointGroup.getObjects()
-        
 
-        objs.forEach((point,index)=>{
+
+        objs.forEach((point, index) => {
             const node = cc.instantiate(this.pointPrefab)
             node.setPosition(point.x, point.y);
 
-            if(currentLv - 1 === index){
+            // 当前关卡高亮
+            if (currentLv - 1 === index) {
                 node.getComponent(cc.Animation).play('button_wave')
             }
+
+            // 注册点击事件
+            node.on(cc.Node.EventType.MOUSE_DOWN, (event) => {
+                this.chooseLevel(index + 1)
+            }, this);
 
             // const node = new cc.Node()
 
@@ -107,6 +113,11 @@ export default class NewClass extends cc.Component {
 
         }
 
+    }
+
+    chooseLevel(level: number) {
+        // todo 传递关卡参数
+        cc.director.loadScene("GamePlay");
     }
 
     // update (dt) {}

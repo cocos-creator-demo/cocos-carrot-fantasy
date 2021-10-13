@@ -25,6 +25,9 @@ export default class NewClass extends cc.Component {
 
     }
 
+    startGame(){
+        cc.director.loadScene('ChooseLevel')
+    }
 
     initAnim() {
         this.initHelpAnim()
