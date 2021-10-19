@@ -14,7 +14,7 @@ var LevelData = [
             {
                 // 第1组
                 index: 1,
-                team: [{ name: "L11", count: 5, blood: 5.0, speed: 180 }],
+                team: [{ name: "L11", count: 5, blood: 5.0, speed: 180 },],
             },
             {
                 // 第2组

@@ -5,6 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import { eventBus, eventNameEnum } from "./event"
 
 export default class Monster extends cc.Node {
     road: any[]   // 移动路径
@@ -41,8 +42,6 @@ export default class Monster extends cc.Node {
     runNextRoad() {
         const cur = this.road[this.roadIndex]
         const next = this.road[this.roadIndex + 1]
-        console.log('cur', cur.x, cur.y)
-        console.log('next', next.x, next.y)
         // 转方向
         if (cur.x <= next.x) {
             this.scaleX = -1
@@ -52,7 +51,6 @@ export default class Monster extends cc.Node {
         // var distance = cc.pDistance(this.road[this.roadIndex], this.road[this.roadIndex + 1]);
         // todo 找到 pDistance 的替代
         var distance = cur.sub(next).mag()
-        var distance2 = cur.mag(next)
         // console.log(distance)
         // console.log(distance2)
         // console.log(distance === distance2)
@@ -63,8 +61,11 @@ export default class Monster extends cc.Node {
                 this.runNextRoad();
             } else {
                 // 吃到萝卜事件抛出
-                console.log('todo 吃到萝卜')
-
+                const event = new cc.Event.EventCustom(eventNameEnum.MONSTER_EAT_CARROT, false)
+                event.setUserData({
+                    target: this
+                })
+                eventBus.dispatchEvent(event)
             }
         }.bind(this));
         var seq = cc.sequence(moveTo, callback);
