@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "tower_panel",
+    "_name": "bottle_tower",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -22,19 +22,16 @@
       },
       {
         "__id__": 5
-      },
-      {
-        "__id__": 8
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 11
+        "__id__": 8
       }
     ],
     "_prefab": {
-      "__id__": 12
+      "__id__": 9
     },
     "_opacity": 255,
     "_color": {
@@ -46,8 +43,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 70,
-      "height": 70
+      "width": 0,
+      "height": 0
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -58,8 +55,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        369.515,
-        238.132,
+        378.069,
+        212.51,
         0,
         0,
         0,
@@ -85,7 +82,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "select_01",
+    "_name": "Bottle_3",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -110,8 +107,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 64,
-      "height": 64
+      "width": 66,
+      "height": 66
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -163,7 +160,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "9b4c173a-28c0-4c1b-a38b-b26e4e3e4bd8"
+      "__uuid__": "274343ce-233d-4e90-af5d-d6b7db88b5e7"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -176,7 +173,9 @@
     "_fillStart": 0,
     "_fillRange": 0,
     "_isTrimmedMode": true,
-    "_atlas": null,
+    "_atlas": {
+      "__uuid__": "3b19b5d3-6520-4b0b-ba31-20b7e140fbee"
+    },
     "_id": ""
   },
   {
@@ -185,20 +184,20 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "a33809a3-8c1a-4aaa-a3a1-b19ebded397b"
+      "__uuid__": "ff57c901-8fa9-42d8-8d1f-a9e7db9ac733"
     },
-    "fileId": "ed6PODChZNRZkYqJU1NbA1",
+    "fileId": "a3yZNoO9JCl5Si7sfXM6Wh",
     "sync": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "warning",
+    "_name": "Bottle21",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 6
@@ -218,7 +217,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 54,
-      "height": 54
+      "height": 30
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -270,114 +269,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "ac099c1a-3693-45a8-8405-abeaed846713"
-    },
-    "_type": 0,
-    "_sizeMode": 1,
-    "_fillType": 0,
-    "_fillCenter": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_fillStart": 0,
-    "_fillRange": 0,
-    "_isTrimmedMode": true,
-    "_atlas": null,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.PrefabInfo",
-    "root": {
-      "__id__": 1
-    },
-    "asset": {
-      "__uuid__": "a33809a3-8c1a-4aaa-a3a1-b19ebded397b"
-    },
-    "fileId": "82fODgwGxDh4w4lt1NcaoX",
-    "sync": false
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "icon",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 1
-    },
-    "_children": [],
-    "_active": false,
-    "_components": [
-      {
-        "__id__": 9
-      }
-    ],
-    "_prefab": {
-      "__id__": 10
-    },
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 70,
-      "height": 70
-    },
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_trs": {
-      "__type__": "TypedArray",
-      "ctor": "Float64Array",
-      "array": [
-        0,
-        70,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        1,
-        1
-      ]
-    },
-    "_eulerAngles": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_is3DNode": false,
-    "_groupIndex": 0,
-    "groupIndex": 0,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.Sprite",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 8
-    },
-    "_enabled": true,
-    "_materials": [
-      {
-        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
-      }
-    ],
-    "_srcBlendFactor": 770,
-    "_dstBlendFactor": 771,
-    "_spriteFrame": {
-      "__uuid__": "ad806891-4899-4c80-8ad0-7903adffcc9a"
+      "__uuid__": "b87c9659-bdf3-42ff-b679-7ee3da2984fb"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -401,9 +293,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "a33809a3-8c1a-4aaa-a3a1-b19ebded397b"
+      "__uuid__": "ff57c901-8fa9-42d8-8d1f-a9e7db9ac733"
     },
-    "fileId": "acG8zH9ldGR74lYYGZCRA2",
+    "fileId": "4aWmDd3otBSaoxMb5AprSQ",
     "sync": false
   },
   {
@@ -414,8 +306,8 @@
       "__id__": 1
     },
     "_enabled": true,
-    "icon": {
-      "__id__": 8
+    "bulletPrefab": {
+      "__uuid__": "f8f55284-7f32-4d19-8bf9-74a0b264e3ea"
     },
     "_id": ""
   },
@@ -425,7 +317,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "a33809a3-8c1a-4aaa-a3a1-b19ebded397b"
+      "__uuid__": "ff57c901-8fa9-42d8-8d1f-a9e7db9ac733"
     },
     "fileId": "",
     "sync": false

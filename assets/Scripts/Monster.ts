@@ -49,14 +49,10 @@ export default class Monster extends cc.Node {
             this.scaleX = 1
         }
         // var distance = cc.pDistance(this.road[this.roadIndex], this.road[this.roadIndex + 1]);
-        // todo 找到 pDistance 的替代
-        var distance = cur.sub(next).mag()
-        // console.log(distance)
-        // console.log(distance2)
-        // console.log(distance === distance2)
-        var time = distance / this.speed;
-        var moveTo = cc.moveTo(time, next);
-        var callback = cc.callFunc(function () {
+        const distance = cur.sub(next).mag()
+        const time = distance / this.speed;
+        const moveTo = cc.moveTo(time, next);
+        const callback = cc.callFunc(function () {
             if (this.roadIndex < this.road.length - 1) {
                 this.runNextRoad();
             } else {
