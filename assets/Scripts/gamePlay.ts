@@ -204,7 +204,6 @@ export default class NewClass extends cc.Component {
 
       const i = point.x / tiledSize.width
       const j = point.y / tiledSize.height
-      // console.log(point.x / tiledSize.width, point.y / tiledSize.height)
 
       const node = new cc.Node()
       if (name === 'little') {
@@ -289,10 +288,8 @@ export default class NewClass extends cc.Component {
     this.mapNode.on(cc.Node.EventType.MOUSE_DOWN, (e: cc.Touch) => {
       const {x, y} = e.getLocation()
 
-      console.log(y, x)
       const j = Math.floor(x / tiledSize.width)
       const i = Math.floor(y / tiledSize.height)
-      console.log(j, i)
     })
   }
 

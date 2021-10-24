@@ -309,6 +309,9 @@
     "bulletPrefab": {
       "__uuid__": "f8f55284-7f32-4d19-8bf9-74a0b264e3ea"
     },
+    "weapon": {
+      "__id__": 5
+    },
     "_id": ""
   },
   {

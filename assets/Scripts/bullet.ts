@@ -5,7 +5,7 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-const { ccclass, property } = cc._decorator;
+const {ccclass, property} = cc._decorator;
 
 
 type BulletTarget = cc.Node
@@ -15,31 +15,35 @@ type BulletTarget = cc.Node
 @ccclass
 export default class Bullet extends cc.Component {
 
-    target: BulletTarget
+  target: BulletTarget
 
-    onLoad() {
+  onLoad() {
 
-    }
+  }
 
-    init(target: BulletTarget) {
-        this.target = target
+  init(target: BulletTarget) {
+    this.target = target
 
-        const pos = cc.v2(target.x, target.y)
-        const action = cc.moveTo(0.4, pos)
+    const pos = cc.v2(target.x, target.y)
+    const action = cc.moveTo(0.2, pos)
 
-        // this.node.runAction(cc.sequence(
-        //     action,
-        //     cc.callFunc(() => {
-        //         // todo 消灭monster
-        //         this.node.parent.removeChild(this.node)
-        //     })
-        // ))
-    }
+    this.node.runAction(cc.sequence(
+      action,
+      cc.callFunc(() => {
+        this.node.parent.removeChild(this.node)
+        // todo 消灭monster，扣除monster血量
 
-    update(dt) {
-        // 向 target 位置移动
+        // if(target.parent) {
+        //   target.parent.removeChild(target)
+        // }
+      })
+    ))
+  }
 
-        // 到达时进行攻击
+  update(dt) {
+    // 向 target 位置移动
 
-    }
+    // 到达时进行攻击
+
+  }
 }

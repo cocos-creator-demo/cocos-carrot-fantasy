@@ -18,11 +18,10 @@ export default class Tower extends cc.Component {
   @property(cc.Prefab)
   bulletPrefab: cc.Prefab // 子弹类型
 
-
   @property(cc.Node)
   weapon:cc.Node // 炮管
 
-  attackScope: number = 100 // 攻击范围
+  attackScope: number = 140 // 攻击范围
 
   codeGold: number = 150 // 建造时消耗的金币
 
@@ -31,7 +30,7 @@ export default class Tower extends cc.Component {
 
   onLoad() {
     // 定期调整转向和开火
-    this.schedule(this.onRoateAndFire.bind(this), 0.5)
+    this.schedule(this.onRotateAndFire.bind(this), 0.5)
   }
 
   // 遍历敌人列表，找到最近的敌人
@@ -59,33 +58,34 @@ export default class Tower extends cc.Component {
     return nearestEnemy;
   }
 
-  onRoateAndFire() {
+  onRotateAndFire() {
     const monster = this.findNearestMonster()
-    console.log(monster)
 
     if (!monster) return
 
     // 计算两个点之间的位置，然后调整转向
     const p1 = this.node.position
     const p2 = this.nearestMonster.position
-    const angle = p1.angle(p2)
+    // 炮台需要旋转的角度
+    const angle = p2.sub(p1).signAngle(cc.v2(1, 0))
 
-
+    const degree = angle * 180 / Math.PI
     // 旋转位置后开火
     const action = cc.sequence(
-      cc.rotateTo(0.2, angle),
+      cc.rotateTo(0.2, degree),
       cc.callFunc(() => {
         this.fire()
       })
     )
 
-    this.node.runAction(action)
+    this.weapon.runAction(action)
   }
 
   fire() {
     const node = cc.instantiate(this.bulletPrefab)
     node.x = this.node.x
     node.y = this.node.y
+    node.angle = this.weapon.angle
 
     const bullet = node.getComponent(Bullet)
     bullet.init(this.nearestMonster)
