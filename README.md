@@ -150,3 +150,44 @@ this.node.y += dt * dir.y * moveSpeed;
 ```
 
 
+## 数据与UI同步
+
+在游戏玩法界面涉及到大量的状态数据，如萝卜血量、金币、怪物波数等，每个数据都受到一些逻辑的影响
+* 建造、升级炮塔需要消耗金币
+* 消灭关务可以获取金币
+* 怪物抵达萝卜扣除血量
+* 怪物波数随时间更新
+
+直观的思路是在逻辑触发，修改数据时，同步修改UI上的展示，类似于Web开发中的直接操作DOM
+
+```js
+function updateGoldNum(){
+  this.goldLabel.string = `金币：${this.gold}`
+}
+
+// 修建炮塔时
+this.gold -= 100
+this.updateGoldNum()
+
+// 消灭怪物时
+this.gold += 50
+this.updateGoldNum()
+```
+
+看起来数据的修改和UI的更新是分开的
+```js
+function updateGoldNum(val){
+  this.gold += val 
+  this.goldLabel.string = `金币：${this.gold}`
+}
+
+// 修建炮塔时
+this.updateGoldNum(-100)
+
+// 消灭怪物时
+this.updateGoldNum(50)
+```
+
+这样将数据的更新和UI的同步放在一起，貌似会好一点。理想中的数据更新应该类似于MVVM，在数据变化的时候自动更新UI，这样就只要关注游戏逻辑与数据更新就可以了
+
+cocos creator在定义属性的时候提供了`notify`（[开发文档](https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html)），实际上是监听了数据的set，可以达到类似的目的

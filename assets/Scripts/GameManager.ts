@@ -38,6 +38,8 @@ const GameManager = {
   currMonsterPool: [], // [当前]怪物节点池
   currBulletPool: [], // [当前]子弹节点池
 
+  currentMonsterList: [],
+
   isWin: false, // 是否赢了
   // 加载[关卡数据]
   loadLevelData: function (level) {
@@ -60,6 +62,7 @@ const GameManager = {
     this._teamMonsterCount = this.monsterGroup[0].team[0].count - 1;
     this.isMonsterGetFinish = false;
 
+    this.currentMonsterList = []
     this._monsterDataArray = [];
 
     this.currMonsterDataPool = [];
@@ -99,9 +102,6 @@ const GameManager = {
   // 获取下一个怪物数据
   _getNextMonsterData: function () {
     if (this.isMonsterGetFinish == true) {
-      cc.warn(
-        "GameManager._getNextMonsterData() : 所有怪物数据已经获取完毕！"
-      );
       return;
     }
 
@@ -129,13 +129,6 @@ const GameManager = {
       this.group++;
       groupData = this._monsterDataArray[0];
       this._monsterDataArray.splice(0, 1);
-
-      // [抛出事件]组别更新
-      // var event = new cc.EventCustom(jf.EventName.GP_UPDATE_GROUP);
-      // event.setUserData({
-      //     group: this.group,
-      // });
-      // cc.eventManager.dispatchEvent(event);
     } else {
       groupData = [];
     }
@@ -179,25 +172,16 @@ const GameManager = {
     }
     return monsterCount;
   },
-  // 萝卜每次扣一滴血
-  // subtractCarrotBlood: function () {
-  //     this.carrotBlood = this.carrotBlood <= 0 ? 0 : this.carrotBlood - 1;
-  //     // [抛出事件]血量更新
-  //     // var event = new cc.EventCustom(jf.EventName.GP_UPDATE_CARROT_BLOOD);
-  //     // event.setUserData({
-  //     //     blood: this.carrotBlood,
-  //     // });
-  //     cc.eventManager.dispatchEvent(event);
 
-  //     // [抛出事件]游戏结束
-  //     if (this.carrotBlood <= 0) {
-  //         // var gameOverEvent = new cc.EventCustom(jf.EventName.GP_GAME_OVER);
-  //         // gameOverEvent.setUserData({
-  //         //     isWin: false,
-  //         // });
-  //         // cc.eventManager.dispatchEvent(gameOverEvent);
-  //     }
-  // },
+  addMonster(monster) {
+    this.currentMonsterList.push(monster)
+  },
+  removeMonster(monster) {
+    const idx = this.currentMonsterList.indexOf(monster)
+    if (idx > -1) {
+      this.currentMonsterList.splice(idx,1 )
+    }
+  },
   //////////////////////////////
   // getter && setter
   //////////////////////////////

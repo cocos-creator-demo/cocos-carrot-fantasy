@@ -94,6 +94,9 @@
       },
       {
         "__id__": 72
+      },
+      {
+        "__id__": 73
       }
     ],
     "_prefab": null,
@@ -183,7 +186,7 @@
       "array": [
         0,
         0,
-        259.1175071416909,
+        258.93738994939196,
         0,
         0,
         0,
@@ -1451,7 +1454,7 @@
         "__id__": 57
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [],
     "_prefab": null,
     "_opacity": 255,
@@ -3160,5 +3163,21 @@
       "__id__": 24
     },
     "_id": "e8xIqx8bZNSIEWXKzV9qv1"
+  },
+  {
+    "__type__": "2d073WgjkxOSZu1AK2fWjQi",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "currentWave": {
+      "__id__": 54
+    },
+    "totalWave": {
+      "__id__": 56
+    },
+    "_id": "0aI46OA91P3Lh2umBpqkTz"
   }
 ]

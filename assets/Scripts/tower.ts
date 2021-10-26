@@ -19,7 +19,7 @@ export default class Tower extends cc.Component {
   bulletPrefab: cc.Prefab // 子弹类型
 
   @property(cc.Node)
-  weapon:cc.Node // 炮管
+  weapon: cc.Node // 炮管
 
   attackScope: number = 140 // 攻击范围
 
@@ -35,23 +35,20 @@ export default class Tower extends cc.Component {
 
   // 遍历敌人列表，找到最近的敌人
   findNearestMonster() {
-    var monsterArray = GameManager.currMonsterPool;
-    var currMinDistant = this.attackScope;
-    var nearestEnemy = null;
-    var monster = null;
-    var distance = 0;
-    for (var i = 0; i < monsterArray.length; i++) {
-      for (var j = 0; j < monsterArray[i].length; j++) {
-        monster = monsterArray[i][j];
+    const currentMonsterList = GameManager.currentMonsterList;
+    let currMinDistant = this.attackScope;
+    let nearestEnemy = null;
+    let monster = null;
+    let distance = 0;
+    for (let i = 0; i < currentMonsterList.length; i++) {
+      monster = currentMonsterList[i];
+      const p1 = this.node.position
+      const p2 = monster.position
+      distance = p1.sub(p2).mag()
 
-        const p1 = this.node.position
-        const p2 = monster.position
-        distance = p1.sub(p2).mag()
-
-        if (distance < currMinDistant) {
-          currMinDistant = distance;
-          nearestEnemy = monster;
-        }
+      if (distance < currMinDistant) {
+        currMinDistant = distance;
+        nearestEnemy = monster;
       }
     }
     this.nearestMonster = nearestEnemy;

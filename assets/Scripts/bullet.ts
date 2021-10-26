@@ -5,6 +5,8 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import GameManager from "./GameManager";
+
 const {ccclass, property} = cc._decorator;
 
 
@@ -33,9 +35,10 @@ export default class Bullet extends cc.Component {
         this.node.parent.removeChild(this.node)
         // todo 消灭monster，扣除monster血量
 
-        // if(target.parent) {
-        //   target.parent.removeChild(target)
-        // }
+        if(target.parent) {
+          target.parent.removeChild(target)
+          GameManager.removeMonster(target)
+        }
       })
     ))
   }

@@ -24,19 +24,18 @@ enum MapCellEnum {
 @ccclass
 export default class NewClass extends cc.Component {
 
+  @property(Carrot)
+  carrot: Carrot
+
+  @property(cc.Node)
+  towerPanel: cc.Node
+
   tiledMap: cc.TiledMap
   mapNode: cc.Node
   currGroupCreatedMonsterCount: number
   currGroupCreatedMonsterSum: number
 
   roadPointArray: cc.Vec2[]
-
-  @property(Carrot)
-  carrot: Carrot
-
-
-  @property(cc.Node)
-  towerPanel: cc.Node
 
   mapArr: any[][]
 
@@ -312,13 +311,22 @@ export default class NewClass extends cc.Component {
     var groupDelay = cc.delayTime(GameManager.getGroupInterval());
     // 延迟时间
     var enemyDelay = cc.delayTime(GameManager.getEnemyInterval());
-    var callback = cc.callFunc(this.createMonster.bind(this));
+    var callback = cc.callFunc(() => {
+
+      // 更新当前波数
+      const event = new cc.Event.EventCustom(eventNameEnum.WAVE_CHANGE, false)
+      event.setUserData({
+        wave: GameManager.group
+      })
+      eventBus.dispatchEvent(event)
+
+      this.createMonster()
+    });
 
     var createMonsterAction = cc.sequence(enemyDelay.clone(), callback).repeat(this.currGroupCreatedMonsterSum);
     var finalAction = cc.sequence(groupDelay, cc.callFunc(() => {
       this.node.runAction(createMonsterAction);
     }));
-    // this.node.runAction(finalAction);
     this.node.runAction(finalAction);
   }
 
@@ -327,25 +335,25 @@ export default class NewClass extends cc.Component {
   }
 
   createMonster() {
-    var data = GameManager.currMonsterDataPool[0];
+    const data = GameManager.currMonsterDataPool.shift();
     const roadPointArray = this.roadPointArray
 
     // 创建怪物数量+1
     this.currGroupCreatedMonsterCount++;
 
-    var monsterData = {
+    const monsterData = {
       road: roadPointArray,
       speed: data.speed,
       index: data.index
     };
 
-    var namePrefix = data.name.substring(0, data.name.length - 1);
-    var fileNamePrefix = "Theme" + GameManager.getThemeID() + "/Monster/" + namePrefix;
+    const namePrefix = data.name.substring(0, data.name.length - 1);
+    const fileNamePrefix = "Theme" + GameManager.getThemeID() + "/Monster/" + namePrefix;
 
     const themeID = GameManager.getThemeID();
 
-    var fileName = `GamePlay/Object/Theme${themeID}/Monster/${namePrefix}1`;
-    var node = new Monster(fileName, monsterData, fileNamePrefix);
+    const fileName = `GamePlay/Object/Theme${themeID}/Monster/${namePrefix}1`;
+    const node = new Monster(fileName, monsterData, fileNamePrefix);
 
 
     // todo 处理这个坐标的问题
@@ -355,8 +363,7 @@ export default class NewClass extends cc.Component {
     node.setPosition(roadPointArray[0]);
     node.run();
 
-    // 删除掉第一个数据
-    GameManager.currMonsterDataPool.splice(0, 1);
+    GameManager.addMonster(node)
 
     if (this.isNeedLoadNextGroup()) {
       this.loadNextGroupMonster()
