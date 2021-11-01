@@ -173,71 +173,16 @@ const GameManager = {
     return monsterCount;
   },
 
+  // 添加怪物
   addMonster(monster) {
     this.currentMonsterList.push(monster)
   },
+  // 移除怪物
   removeMonster(monster) {
     const idx = this.currentMonsterList.indexOf(monster)
     if (idx > -1) {
       this.currentMonsterList.splice(idx,1 )
     }
-  },
-  //////////////////////////////
-  // getter && setter
-  //////////////////////////////
-  getLevel: function () {
-    return this.level;
-  },
-  setLevel: function (level) {
-    this.level = level;
-  },
-  getLevelData: function () {
-    return this.levelData;
-  },
-  getThemeID: function () {
-    return this.themeID;
-  },
-  getMonsterGroup: function () {
-    return this.monsterGroup;
-  },
-  getGroup: function () {
-    return this.group;
-  },
-  getMaxGroup: function () {
-    return this.maxGroup;
-  },
-  getGold: function () {
-    return this.gold;
-  },
-  getEnemyInterval: function () {
-    return this.enemyInterval;
-  },
-  getGroupInterval: function () {
-    return this.groupInterval;
-  },
-  getLevelName: function () {
-    return this.levelName;
-  },
-  getCarrotBlood: function () {
-    return this.carrotBlood;
-  },
-  setCarrotBlood: function (blood) {
-    this.carrotBlood = blood;
-  },
-  getCurrMonsterDataPool: function () {
-    return this.currMonsterDataPool;
-  },
-  getCurrMonsterPool: function () {
-    return this.currMonsterPool;
-  },
-  getCurrBulletPool: function () {
-    return this.currBulletPool;
-  },
-  getIsWin: function () {
-    return this.isWin;
-  },
-  setIsWin: function (isWin) {
-    this.isWin = isWin;
   },
 };
 

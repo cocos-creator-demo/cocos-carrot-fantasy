@@ -23,7 +23,7 @@ export default class Tower extends cc.Component {
 
   attackScope: number = 140 // 攻击范围
 
-  codeGold: number = 150 // 建造时消耗的金币
+  costGold: number = 150 // 建造时消耗的金币
 
   // 一些属性
   nearestMonster: cc.Node // 最近的敌人

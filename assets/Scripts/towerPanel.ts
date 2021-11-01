@@ -5,13 +5,15 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import {eventBus, eventNameEnum} from "./event";
+import GameManager from "./GameManager";
+
+import Tower from './tower'
+
 const {ccclass, property} = cc._decorator;
 
-import {eventBus, eventNameEnum} from './event';
-import Bullet from './bullet'
-
 @ccclass
-export default class NewClass extends cc.Component {
+export default class TowerPanel extends cc.Component {
 
   // LIFE-CYCLE CALLBACKS:
   @property(cc.Node)
@@ -38,14 +40,27 @@ export default class NewClass extends cc.Component {
   // 创建一个塔
   buildTower(e) {
     e.stopPropagation()
+
     const tower = cc.instantiate(this.towerPrefab)
+
+    const cost = tower.getComponent(Tower).costGold
+    if (cost > GameManager.gold) {
+      cc.log('金币不足，无法创建')
+      return
+    }
 
     tower.x = this.node.x
     tower.y = this.node.y
     this.node.active = false
-    // todo 这里需要解耦
     this.node.parent.addChild(tower)
-    // todo 扣除金币
+
+    GameManager.gold -= cost
+
+    const event = new cc.Event.EventCustom(eventNameEnum.CREATE_TOWER, false)
+    event.setUserData({
+      cost: cost
+    })
+    eventBus.dispatchEvent(event)
   }
 
   // update (dt) {}

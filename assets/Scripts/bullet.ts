@@ -6,6 +6,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
 import GameManager from "./GameManager";
+import {eventBus, eventNameEnum} from "./event";
 
 const {ccclass, property} = cc._decorator;
 
@@ -18,6 +19,7 @@ type BulletTarget = cc.Node
 export default class Bullet extends cc.Component {
 
   target: BulletTarget
+  damage: number = 2
 
   onLoad() {
 
@@ -32,13 +34,14 @@ export default class Bullet extends cc.Component {
     this.node.runAction(cc.sequence(
       action,
       cc.callFunc(() => {
-        this.node.parent.removeChild(this.node)
-        // todo 消灭monster，扣除monster血量
+        const event = new cc.Event.EventCustom(eventNameEnum.REMOVE_BULLET, false)
+        event.setUserData({
+          bullet: this.node,
+          monster: target
+        })
 
-        if(target.parent) {
-          target.parent.removeChild(target)
-          GameManager.removeMonster(target)
-        }
+        eventBus.dispatchEvent(event)
+        this.node.parent.removeChild(this.node)
       })
     ))
   }

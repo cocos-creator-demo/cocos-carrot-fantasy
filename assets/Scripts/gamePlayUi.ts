@@ -5,9 +5,6 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
-import {eventBus, eventNameEnum} from "./event";
-import GameManager from "./GameManager";
-
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -24,19 +21,8 @@ export default class NewClass extends cc.Component {
 
   // LIFE-CYCLE CALLBACKS:
 
-  init(){
-
-  }
-
-  start() {
-    const totalWave = GameManager.monsterGroup.length
-    this.currentWave.string = `${totalWave}`
-
-    // todo 找到一种比较好的同步数据的方法
-    eventBus.on(eventNameEnum.WAVE_CHANGE, (event: cc.Event.EventCustom) => {
-      const {wave} = event.getUserData()
-      this.updateCurrentWave(wave)
-    })
+  updateTotalWave(wave) {
+    this.totalWave.string = `${wave}`
   }
 
   updateCurrentWave(wave) {

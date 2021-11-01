@@ -5,10 +5,14 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
+import Bullet from "./bullet";
+
 const {ccclass, property} = cc._decorator;
 
 import GameManager from './GameManager'
 import Monster from './Monster'
+import GamePlayUi from './gamePlayUi'
+import TowerPanel from './towerPanel'
 
 import {eventBus, eventNameEnum} from './event';
 import Carrot from './carrot'
@@ -39,6 +43,9 @@ export default class NewClass extends cc.Component {
 
   mapArr: any[][]
 
+
+  gamePlayUi: GamePlayUi
+
   // LIFE-CYCLE CALLBACKS:
   onLoad() {
 
@@ -62,6 +69,11 @@ export default class NewClass extends cc.Component {
     })
 
     this.initListener()
+
+
+    this.gamePlayUi = this.getComponent(GamePlayUi)
+    const totalWave = GameManager.monsterGroup.length
+    this.gamePlayUi.updateTotalWave(totalWave)
   }
 
 
@@ -74,11 +86,32 @@ export default class NewClass extends cc.Component {
 
     eventBus.on(eventNameEnum.GAME_OVER, this.onGameOver.bind(this))
 
+    eventBus.on(eventNameEnum.CREATE_TOWER, () => {
+      this.gamePlayUi.updateGoldNum(GameManager.gold)
+    })
+
+    // 子弹消灭时扣除怪物血量
+    eventBus.on(eventNameEnum.REMOVE_BULLET, (event) => {
+      const {monster, bullet: bulletNode} = event.getUserData()
+
+      const bullet = bulletNode.getComponent(Bullet)
+
+      // 扣除monster血量
+      monster.hp -= bullet.damage
+      if (monster.hp <= 0) {
+        GameManager.removeMonster(monster)
+        monster.active = false
+        monster.parent && monster.parent.removeChild(monster)
+
+        GameManager.gold += 10
+        this.gamePlayUi.updateGoldNum(GameManager.gold)
+      }
+    })
   }
 
   initMap(cb) {
-    const themeID = GameManager.getThemeID();
-    const level = GameManager.getLevel() + 1;
+    const themeID = GameManager.themeID;
+    const level = GameManager.level + 1;
 
     const file = `GamePlay/Theme/Theme${themeID}/BG${level}/Level${level}`
 
@@ -190,7 +223,7 @@ export default class NewClass extends cc.Component {
   }
 
   initObstance(name) {
-    const themeID = GameManager.getThemeID();
+    const themeID = GameManager.themeID;
 
     const tiledSize = this.tiledMap.getTileSize()
 
@@ -295,30 +328,26 @@ export default class NewClass extends cc.Component {
 
   // 产生怪物的逻辑
   loadNextGroupMonster() {
-    if (GameManager.getGroup() > GameManager.getMaxGroup()) {
+    if (GameManager.group > GameManager.maxGroup) {
       cc.log("GPMainLayer.loadNextGroupMonster() : 怪物添加完毕");
       return;
     }
 
     GameManager.currMonsterDataPool = GameManager.popNextMonsterGroupData();
-    GameManager.currMonsterPool[GameManager.getGroup() - 1] = [];
+    GameManager.currMonsterPool[GameManager.group - 1] = [];
 
     this.currGroupCreatedMonsterCount = 0;
     // 怪物总数统计
     this.currGroupCreatedMonsterSum = GameManager.getCurrGroupMonsterSum();
 
     // 根据时间间隔依次创建怪物
-    var groupDelay = cc.delayTime(GameManager.getGroupInterval());
+    var groupDelay = cc.delayTime(GameManager.groupInterval);
     // 延迟时间
-    var enemyDelay = cc.delayTime(GameManager.getEnemyInterval());
+    var enemyDelay = cc.delayTime(GameManager.enemyInterval);
     var callback = cc.callFunc(() => {
 
-      // 更新当前波数
-      const event = new cc.Event.EventCustom(eventNameEnum.WAVE_CHANGE, false)
-      event.setUserData({
-        wave: GameManager.group
-      })
-      eventBus.dispatchEvent(event)
+
+      this.gamePlayUi.updateCurrentWave(GameManager.group)
 
       this.createMonster()
     });
@@ -348,9 +377,9 @@ export default class NewClass extends cc.Component {
     };
 
     const namePrefix = data.name.substring(0, data.name.length - 1);
-    const fileNamePrefix = "Theme" + GameManager.getThemeID() + "/Monster/" + namePrefix;
+    const fileNamePrefix = "Theme" + GameManager.themeID + "/Monster/" + namePrefix;
 
-    const themeID = GameManager.getThemeID();
+    const themeID = GameManager.themeID;
 
     const fileName = `GamePlay/Object/Theme${themeID}/Monster/${namePrefix}1`;
     const node = new Monster(fileName, monsterData, fileNamePrefix);
@@ -359,7 +388,7 @@ export default class NewClass extends cc.Component {
     // todo 处理这个坐标的问题
 
     this.mapNode.addChild(node, 99);
-    GameManager.currMonsterPool[GameManager.getGroup() - 1].push(node);
+    GameManager.currMonsterPool[GameManager.group - 1].push(node);
     node.setPosition(roadPointArray[0]);
     node.run();
 
